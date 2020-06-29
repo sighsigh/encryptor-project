@@ -1,15 +1,16 @@
 {
-  "name": "react-parcel-typescript-starter",
-  "version": "0.0.1",
-  "description": "React typescript with parcel bundler",
+  "name": "encryptor-project",
+  "version": "1.0.0",
+  "description": "encrypt and decrypt files on the web",
   "main": "index.js",
-  "repository": "https://github.com/overnight-dev/react-parcel-typescript-starter.git",
-  "author": "Enrique Martín García <enriquem.developer@gmail.com>",
+  "repository": "",
+  "author": "SG",
   "license": "MIT",
   "scripts": {
     "start": "parcel src/index.html"
   },
   "dependencies": {
+    "clsx": "^1.1.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   },
@@ -17,7 +18,7 @@
     "@types/react": "^16.9.19",
     "@types/react-dom": "^16.9.5",
     "parcel-bundler": "^1.12.4",
-    "prettier": "^1.19.1",
+    "styled-components": "^5.1.1",
     "typescript": "^3.7.5"
   }
 }
