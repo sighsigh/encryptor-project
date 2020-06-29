@@ -6,6 +6,7 @@ import { Body1, Body2 } from './Body';
 import styled from 'styled-components';
 
 const _Hero = styled.div`
+    color: ${props => (props.theme.colors.white)};
     word-break: break-word;
     text-align: center;
 `;

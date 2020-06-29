@@ -15,6 +15,7 @@ export const theme = {
     dove_grey: '#98A0A6',
     white: '#ffffff',
     blue: '#009EFF',
+    dark_blue: '#0065FF',
     orange: '#FFA047'
   },
   font: {

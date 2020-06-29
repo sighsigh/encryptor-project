@@ -5,6 +5,7 @@ import styled from 'styled-components';
 const _Toggle = styled.div`
     background-color: ${props => props.theme.colors.blue};
     border-radius: 2px;
+    color: ${props => (props.theme.colors.white)};
     cursor: pointer;
     display: flex;
     align-items: center;

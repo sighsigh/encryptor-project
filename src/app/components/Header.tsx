@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import CubbitIcon from './CubbitIcon';
+import {CubbitIcon} from './Icons';
 import Toggle from './Toggle';
 
 import styled from 'styled-components';

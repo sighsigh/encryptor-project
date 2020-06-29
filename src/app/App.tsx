@@ -13,7 +13,8 @@ import './App.css';
 const GlobalStyle = createGlobalStyle`
   body {
     background-color: ${props => (props.theme.colors.dark)};
-    color: ${props => (props.theme.colors.white)};
+    box-sizing: border-box;
+    color: ${props => (props.theme.colors.dark)};
     font-family: ${props => (props.theme.font.family)};
     font-weight: 300;
     margin: 0;
