@@ -10,10 +10,7 @@ const Button = styled.button`
     font-weight: 300;
     line-height: 26px;
     padding: 5px 40px;
-    @media (min-width: 769px) {
-        color: red;
-    }
-`; // TODO: remove red
+`;
 
 const PrimaryButton = styled(Button)`
     color: ${props => props.theme.colors.white};

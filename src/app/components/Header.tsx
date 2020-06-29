@@ -12,6 +12,7 @@ const _Header = ({ className }) => (
             <Toggle
                 val1='Encrypted'
                 val2='--------'
+                onToggle={() => console.log('toggled')} // TODO: run a real func
             />
         </div>
     </div>

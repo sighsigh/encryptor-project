@@ -1,11 +1,14 @@
 import * as React from "react";
 
 import Header from './components/Header';
-import Toggle from "./components/Toggle";
+import Hero from "./components/Hero";
+import FileUploader from './components/FileUploader';
+import Footer from './components/Footer';
 
 import { createGlobalStyle } from 'styled-components';
 import { ThemeProvider, theme } from "./theme";
-// import { theme } from './theme';
+
+import './App.css';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -23,8 +26,24 @@ const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <Header />
 
+      <section className='main'>
+        <div className='header'>
+          <Header />
+        </div>
+
+        <div className='hero'>
+          <Hero />
+        </div>
+
+        <div className="uploader">
+          <FileUploader />
+        </div>
+      </section>
+
+      <footer>
+        <Footer />
+      </footer>
 
     </ThemeProvider>
   );

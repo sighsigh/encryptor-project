@@ -1,0 +1,21 @@
+.main {
+    display: grid;
+    grid-template: "header" auto
+                    ".    " 144px
+                    "hero"  auto
+                    ".    " 48px
+                    "uploader" auto;
+}
+
+.header {
+    grid-area: header;
+}
+
+.hero {
+    grid-area: hero;
+    padding: 0 24px;
+}
+
+.uploader {
+    grid-area: uploader;
+}

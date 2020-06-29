@@ -1,2 +1,2 @@
-# react-parcel-typescript-starter
-Generic project starter with parcel react and typescript
+# encryptor project
+encrypt and decrypt files on the web

@@ -1,13 +1,6 @@
 import * as React from 'react';
 
-import clsx from 'clsx';
 import styled from 'styled-components';
-
-interface Props {
-    on?: boolean,
-    val1: string | React.ReactNode,
-    val2: string | React.ReactNode
-}
 
 const _Toggle = styled.div`
     background-color: ${props => props.theme.colors.blue};
@@ -42,19 +35,29 @@ const _Toggle = styled.div`
     }
 `;
 
-const Toggle = (props: Props) => {
+interface Props {
+    on?: boolean,
+    onToggle: () => void,
+    val1: string | React.ReactNode,
+    val2: string | React.ReactNode
+}
+
+const Toggle: React.FC<Props> = ({on, onToggle, val1, val2}) => {
     const [isOn, setIsOn] = React.useState(false);
-    const { on, val1, val2 } = props;
 
     React.useEffect(() => {
         setIsOn(on);
     }, [on]);
 
+    const handleOnToggle = () => {
+        setIsOn(!isOn);
+        onToggle();
+    }
+
     return (
         <_Toggle
-            className={clsx(isOn && 'active')}
-            onClick={() => setIsOn(!isOn)}>
-
+            className={isOn ? 'active' : ''}
+            onClick={handleOnToggle}>
             <div>{val1}</div>
             <div>{val2}</div>
         </_Toggle>
