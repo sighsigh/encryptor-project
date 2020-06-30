@@ -35,9 +35,6 @@ export class Encrypter {
     }
 
     decrypt() {
-        if(!this.encryptedText) {
-            this.decryptedText = '';
-        }
         const decrypted = crypto.AES.decrypt(
             this.encryptedText,
             crypto.enc.Hex.parse(this.key_hex),
