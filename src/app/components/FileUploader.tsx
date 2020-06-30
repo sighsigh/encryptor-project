@@ -5,7 +5,7 @@ import { isTxtFile } from '../utils/fileExtensions';
 
 import { Body1 } from './Body';
 import { DocIconMini, ArrowDownIcon } from './Icons';
-
+import { PrimaryButton, SecondaryButton } from './Button';
 import styled from 'styled-components';
 
 const _Uploader = styled.div`
@@ -13,10 +13,13 @@ const _Uploader = styled.div`
     height: 216px;
     text-align: center;
     padding: 8px;
+    margin: 0 auto;
+    max-width: 936px;
 
     .drop-area {
         background: rgba(22, 22, 22, 0.16);
         border: 1px dashed ${props => props.theme.colors.light_grey};
+        cursor: pointer;
         font-weight: 400;
         display: flex;
         flex-direction: column;
@@ -52,9 +55,21 @@ const _Uploader = styled.div`
           max-width: 48px;
         }
     }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      margin-top: 48px;
+
+      button:first-of-type {
+        margin-right: 24px;
+      }
+    }
 `;
 
 const FileUploader = () => {
+  const [uploadedFileName, setUploadedFileName] = React.useState('');
+
   const onDrop = React.useCallback(acceptedFiles => {
     acceptedFiles.forEach((file) => {
 
@@ -69,7 +84,10 @@ const FileUploader = () => {
       reader.onerror = () => console.log('file reading has failed')
       reader.onload = () => {
         const content = reader.result;
+        // save in Local Storage
         console.log(content);
+
+        setUploadedFileName(file.name);
       }
       reader.readAsText(file)
     })
@@ -79,15 +97,30 @@ const FileUploader = () => {
 
   return (
     <_Uploader>
-      <div className='drop-area' {...getRootProps()}>
-        <input {...getInputProps()} />
-        <div className='trigger'>
-            <div><DocIconMini /></div>
-            <div className='filename'><Body1>{"Uz##'w2x{ w3"}</Body1></div>
-            <div className='arrow'><ArrowDownIcon /></div>
-        </div>
-        <Body1>or drop files here</Body1>
+      {
+        !uploadedFileName ? (
+            <div className='drop-area' {...getRootProps()}>
+              <input {...getInputProps()} />
+              <div className='trigger'>
+                  <div><DocIconMini /></div>
+                  <div className='filename'><Body1>{"Uz##'w2x{ w3"}</Body1></div>
+                  <div className='arrow'><ArrowDownIcon /></div>
+              </div>
+              <Body1>or drop files here</Body1>
+            </div>
+        )
+        : (
+          <div className='drop-area'>
+            {uploadedFileName}
+          </div>
+        )
+      }
+
+      <div className="controls">
+        <PrimaryButton>Encrypt</PrimaryButton>
+        <SecondaryButton>Decrypt</SecondaryButton>
       </div>
+
     </_Uploader>
   )
 };
