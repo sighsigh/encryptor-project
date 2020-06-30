@@ -7,14 +7,14 @@ import {
 import { EncryptedFileInterface } from '../interfaces';
 
 interface StateInterface {
-    isEncryptingProgress: boolean,
-    isEncryptingDone: boolean,
+    isInProgress: boolean,
+    isDone: boolean,
     encryptedFile: EncryptedFileInterface
 }
 
 const initialState: StateInterface = {
-    isEncryptingProgress: false,
-    isEncryptingDone: false,
+    isInProgress: false,
+    isDone: false,
     encryptedFile: {
         text: '',
         key: ''
@@ -26,14 +26,14 @@ export default (state = initialState, action) => {
         case FILE_ENCRYPT_REQUEST:
             return {
                 ...state,
-                isEncryptingProgress: true,
-                isEncryptingDone: false
+                isInProgress: true,
+                isDone: false
             }
         case FILE_ENCRYPT_SUCCESS:
             return {
                 ...state,
-                isEncryptingProgress: false,
-                isEncryptingDone: true,
+                isInProgress: false,
+                isDone: true,
                 encryptedFile: action.payload
             }
         case FILE_ENCRYPT_ERROR:

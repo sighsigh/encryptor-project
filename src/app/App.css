@@ -3,11 +3,8 @@
     grid-template: "header   " auto
                     ".       " 144px
                     "hero    "  auto
-                    "downloader" auto
-                    "uploader" auto
-                    ".       " 48px
-                    "buttons " auto
-                    ".       " 240px;
+                    "manager" auto
+                    ".       " 192px;
 }
 
 .header {
@@ -19,18 +16,16 @@
     padding: 0 24px;
 }
 
-.uploader {
-    grid-area: uploader;
+.uploader,
+.downloader,
+.loader {
+    grid-area: manager;
 }
 
-.downloader {
-    grid-area: downloader;
+.controls {
+    margin-top: 48px;
 }
 
 .loader {
-    grid-area: uploader;
-}
-
-.buttons {
-    grid-area: buttons;
+    margin-top: 165px;
 }

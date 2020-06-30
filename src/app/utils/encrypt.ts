@@ -9,7 +9,7 @@ const getRandomKey = (keyLength: number = 16): string => {
     return key;
 }
 
-export class Encrypter {
+export class Encryptor {
     secret: string;
     iv_hex: string;
     key_hex: string;
@@ -34,17 +34,13 @@ export class Encrypter {
         this.encryptedText = encrypted.ciphertext.toString(crypto.enc.Base64);
     }
 
-    decrypt() {
+    decrypt({ encryptedText, key_hex, iv_hex }) {
         const decrypted = crypto.AES.decrypt(
-            this.encryptedText,
-            crypto.enc.Hex.parse(this.key_hex),
-            { iv: crypto.enc.Hex.parse(this.iv_hex) }
+            encryptedText || this.encryptedText,
+            crypto.enc.Hex.parse(key_hex || this.key_hex),
+            { iv: crypto.enc.Hex.parse(iv_hex || this.iv_hex) }
         );
 
-        this.decryptedText = decrypted.toString(crypto.enc.Base64);
-
-        console.log(window.atob(this.decryptedText));
+        this.decryptedText = atob(decrypted.toString(crypto.enc.Base64));
     }
 }
-
-

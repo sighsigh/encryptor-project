@@ -18,6 +18,11 @@ const StyledUploader = styled.div`
       max-width: 552px;
       margin: 0 auto 48px;
       text-align: center;
+
+      @media ${props => props.theme.media_queries.phone_only} {
+        padding: 0 8px;
+        word-break: break-word;
+      }
     }
 
     .upload-area {

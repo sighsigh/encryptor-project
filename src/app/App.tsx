@@ -3,6 +3,7 @@ import * as React from "react";
 import { connect } from 'react-redux';
 import { uploadFile } from './actions/fileActions';
 import { encryptFile } from './actions/encryptActions';
+import {decryptFile,  enableDecryptMode } from './actions/decryptActions';
 import { FileDataInterface } from './interfaces';
 import { EncryptedFileInterface } from './interfaces';
 
@@ -35,20 +36,28 @@ const GlobalStyle = createGlobalStyle`
 interface Props {
   uploadFile: (fileData: FileDataInterface) => void,
   encryptFile: (fileData: FileDataInterface) => void,
+  decryptFile: (key: string) => void,
+  enableDecryptMode: () => void,
   fileData: FileDataInterface,
   encryptedFile: EncryptedFileInterface,
   isEncryptingProgress: boolean,
   isEncryptingDone: boolean,
+  isDecryptingProgress: boolean,
+  isDecryptingModeOn: boolean
 }
 
 const App: React.FC<Props> = props => {
   const {
     uploadFile,
     encryptFile,
+    decryptFile,
+    enableDecryptMode,
     fileData,
     encryptedFile,
     isEncryptingProgress,
-    isEncryptingDone
+    isEncryptingDone,
+    isDecryptingProgress,
+    isDecryptingModeOn
   } = props;
 
   return (
@@ -64,7 +73,7 @@ const App: React.FC<Props> = props => {
           <Hero />
         </div>
 
-        {isEncryptingProgress
+        {(isEncryptingProgress || isDecryptingProgress)
           ? (
             <div className='loader'>
               <Loader />
@@ -73,10 +82,12 @@ const App: React.FC<Props> = props => {
           : (
             <>
               {
-                isEncryptingDone
+                (isEncryptingDone || isDecryptingModeOn)
                   ? (
                       <div className='downloader'>
-                        <FileDownloader />
+                        <FileDownloader
+                          onDecrypt={decryptFile}
+                        />
                       </div>
                   )
                   :
@@ -85,10 +96,12 @@ const App: React.FC<Props> = props => {
                       <FileUploader
                         onUpload={uploadFile}
                       />
-                      <Controls
-                        onEncryptClick={() => encryptFile(fileData)}
-                        onDecryptClick={() => {}}
-                      />
+                      <div className="controls">
+                        <Controls
+                          onEncryptClick={() => encryptFile(fileData)}
+                          onDecryptClick={enableDecryptMode}
+                        />
+                      </div>
                     </div>
                   )
               }
@@ -109,13 +122,17 @@ const App: React.FC<Props> = props => {
 const mapStateToProps = state => ({
   fileData: state.file.data,
   encryptedFile: state.encrypt.encryptedFile,
-  isEncryptingProgress: state.encrypt.isEncryptingProgress,
-  isEncryptingDone: state.encrypt.isEncryptingDone,
-})
+  isEncryptingProgress: state.encrypt.isInProgress,
+  isEncryptingDone: state.encrypt.isDone,
+  isDecryptingModeOn: state.decrypt.isModeOn,
+  isDecryptingProgress: state.decrypt.isInProgress,
+});
 
 const mapDispatchToProps = dispatch => ({
   uploadFile: (fileData: FileDataInterface) => dispatch(uploadFile(fileData)),
-  encryptFile: (fileData: FileDataInterface) => dispatch(encryptFile(fileData))
+  encryptFile: (fileData: FileDataInterface) => dispatch(encryptFile(fileData)),
+  decryptFile: (key: string) => dispatch(decryptFile(key)),
+  enableDecryptMode: () => dispatch(enableDecryptMode())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

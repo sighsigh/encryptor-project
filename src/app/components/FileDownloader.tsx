@@ -4,7 +4,8 @@ import { useSelector } from 'react-redux';
 import {
     fileNameSelector,
     encryptionKeySelector,
-    encryptedTextSelector
+    encryptedTextSelector,
+    isDecryptModeOn,
 } from '../selectors';
 
 import Recap from './Recap';
@@ -18,6 +19,10 @@ const StyledFileDownloader = styled.div`
     max-width: 552px;
     margin: 0 auto;
 
+    @media ${props => props.theme.media_queries.phone_only} {
+        padding: 0 8px;
+    }
+
     .recap {
         border: 1px solid ${props => props.theme.colors.light_grey};
         border-radius: 3px;
@@ -28,7 +33,7 @@ const StyledFileDownloader = styled.div`
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-top: 22px;
+        margin: 22px 0 0;
 
         .title {
             margin-bottom: 24px;
@@ -63,19 +68,23 @@ const downloadFile = (filename: string, fileContent: string): void => {
     const element = document.createElement('a');
     element.setAttribute('href', 'data:fileContent/plain;charset=utf-8,' + encodeURIComponent(fileContent));
     element.setAttribute('download', filename);
-
     element.style.display = 'none';
     document.body.appendChild(element);
-
     element.click();
-
     document.body.removeChild(element);
 }
 
-const FileDownloader = () => {
+interface Props {
+    onDecrypt: (key: string) => void
+}
+
+const FileDownloader: React.FC<Props> = ({ onDecrypt }) => {
     const fileName = useSelector(fileNameSelector);
     const encryptedContent = useSelector(encryptedTextSelector);
     const encryptionKey = useSelector(encryptionKeySelector);
+    const isDecryptMode = useSelector(isDecryptModeOn);
+
+    const [decryptionKey, setDecryptionKey] = React.useState('');
 
     const inputRef = React.useRef();
 
@@ -83,7 +92,12 @@ const FileDownloader = () => {
         const { current }: any = inputRef;
         current.select();
         document.execCommand('copy');
-      }
+    };
+
+    const decryptAndDownload = async () => {
+        await onDecrypt(decryptionKey);
+        // TODO FIX
+    }
 
     return (
         <StyledFileDownloader>
@@ -91,28 +105,55 @@ const FileDownloader = () => {
                 <Recap text={fileName} light />
             </div>
 
-            <div className="download-area">
-                <div className="title">
-                    <Body1>Your encryption key</Body1>
-                </div>
+            { isDecryptMode
+                ? (
+                    <form className="download-area" onSubmit={decryptAndDownload}>
+                        <div className="title">
+                            <Body1>Insert your key:</Body1>
+                        </div>
 
-                <div className="secret">
-                    <input
-                        ref={inputRef}
-                        type='text'
-                        name='secret'
-                        value={encryptionKey}
-                        readOnly
-                    />
-                    <PrimaryButtonSmall onClick={copyCodeToClipboard}>
-                        Copy
-                    </PrimaryButtonSmall>
-                </div>
+                        <div className="secret">
+                            <input
+                                type='text'
+                                name='decryptSecret'
+                                onChange={e => setDecryptionKey(e.target.value)}
+                            />
+                        </div>
 
-                <div className='btn-download'>
-                    <ActionButton onClick={() => downloadFile(fileName, encryptedContent)}>Download</ActionButton>
-                </div>
-            </div>
+                        <div className='btn-download'>
+                            <ActionButton
+                                type='submit'>
+                                    Decrypt and download
+                            </ActionButton>
+                        </div>
+                    </form>
+                )
+                :
+                (
+                    <div className="download-area">
+                        <div className="title">
+                            <Body1>Your encryption key</Body1>
+                        </div>
+
+                        <div className="secret">
+                            <input
+                                ref={inputRef}
+                                type='text'
+                                name='encryptSecret'
+                                value={encryptionKey}
+                                readOnly
+                            />
+                            <PrimaryButtonSmall onClick={copyCodeToClipboard}>
+                                Copy
+                            </PrimaryButtonSmall>
+                        </div>
+
+                        <div className='btn-download'>
+                            <ActionButton onClick={() => downloadFile(fileName, encryptedContent)}>Download</ActionButton>
+                        </div>
+                    </div>
+                )
+            }
 
         </StyledFileDownloader>
     )
