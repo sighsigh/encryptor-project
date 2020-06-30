@@ -13,7 +13,11 @@
     "crypto-js": "^4.0.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-dropzone": "^11.0.1"
+    "react-dropzone": "^11.0.1",
+    "react-redux": "^7.2.0",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@types/react": "^16.9.19",
@@ -21,5 +25,10 @@
     "parcel-bundler": "^1.12.4",
     "styled-components": "^5.1.1",
     "typescript": "^3.7.5"
+  },
+  "alias": {
+    "@components": "./src/app/components",
+    "@actions": "./src/app/actions",
+    "@reducers": "./src/app/reducers"
   }
 }
