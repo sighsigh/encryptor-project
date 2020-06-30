@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { connect } from 'react-redux';
 import { uploadFile } from './actions/fileActions';
-import { encryptFile,  } from './actions/encryptActions';
+import { encryptFile } from './actions/encryptActions';
 import { FileDataInterface } from './interfaces';
 import { EncryptedFileInterface } from './interfaces';
 
