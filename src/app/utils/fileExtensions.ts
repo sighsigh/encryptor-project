@@ -1,4 +1,4 @@
-const getFileTypeChecker = type => fileName => {
+const isFileType = (type: string) => (fileName: string): boolean => {
     const extension = '.' + type;
     const lastDotIndex = fileName.lastIndexOf(extension);
     if (lastDotIndex === -1) {
@@ -8,4 +8,4 @@ const getFileTypeChecker = type => fileName => {
     return extension === fileName.substr(lastDotIndex);
 };
 
-export const isTxtFile = getFileTypeChecker('txt');
+export const isTxtFile = isFileType('txt');
