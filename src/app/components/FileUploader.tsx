@@ -1,20 +1,29 @@
 import * as React from 'react';
+import { useSelector } from 'react-redux';
 import {useDropzone} from 'react-dropzone';
 
 import { isTxtFile } from '../utils/fileExtensions';
 
 import { Body1 } from './Body';
 import { DocIconMini, ArrowDownIcon } from './Icons';
-import { PrimaryButton, SecondaryButton } from './Button';
 import styled from 'styled-components';
 
-const _Uploader = styled.div`
-    background-color: ${props => props.theme.colors.orange};
-    height: 216px;
-    text-align: center;
-    padding: 8px;
-    margin: 0 auto;
-    max-width: 936px;
+const StyledUploader = styled.div`
+    .description {
+      color: ${props => props.theme.colors.white};
+      max-width: 552px;
+      margin: 0 auto 48px;
+      text-align: center;
+    }
+
+    .upload-area {
+      background-color: ${props => props.theme.colors.orange};
+      height: 216px;
+      text-align: center;
+      padding: 8px;
+      margin: 0 auto;
+      max-width: 936px;
+    }
 
     .drop-area {
         background: rgba(22, 22, 22, 0.16);
@@ -27,7 +36,7 @@ const _Uploader = styled.div`
         height: 100%;
     }
 
-    .trigger {
+    .btn-upload {
         background-color: ${props => props.theme.colors.white};
         border-radius: 3px;
         color: ${props => props.theme.colors.dark};
@@ -55,53 +64,62 @@ const _Uploader = styled.div`
           max-width: 48px;
         }
     }
-
-    .controls {
-      display: flex;
-      justify-content: center;
-      margin-top: 48px;
-
-      button:first-of-type {
-        margin-right: 24px;
-      }
-    }
 `;
 
-const FileUploader = () => {
-  const [uploadedFileName, setUploadedFileName] = React.useState('');
+interface FileInterface {
+  path: string,
+  content: string | ArrayBuffer
+}
+
+interface Props {
+  onUpload: (file: FileInterface | null) => void,
+}
+
+const FileUploader: React.FC<Props> = props => {
+  const { onUpload } = props;
+
+  const isFileUploaded = useSelector(state => state.file.isUploaded);
+  const fileName = useSelector(state => state.file.data.path);
+
+  const onError = () => onUpload(null);
 
   const onDrop = React.useCallback(acceptedFiles => {
     acceptedFiles.forEach((file) => {
 
       if(!isTxtFile(file.name)) {
-        console.log('Invalid file type. Please upload a .txt file.');
+        console.error('Invalid file type. Please upload a .txt file.');
         return;
       };
 
       const reader = new FileReader();
 
-      reader.onabort = () => console.log('file reading was aborted')
-      reader.onerror = () => console.log('file reading has failed')
+      reader.onabort = () => onError();
+      reader.onerror = () => onError();
       reader.onload = () => {
-        const content = reader.result;
-        // save in Local Storage
-        console.log(content);
+        const { result } = reader;
 
-        setUploadedFileName(file.name);
+        onUpload({
+          path: file.name,
+          content: result
+        });
       }
-      reader.readAsText(file)
+      reader.readAsText(file);
     })
   }, [])
 
   const {getRootProps, getInputProps} = useDropzone({onDrop});
 
   return (
-    <_Uploader>
+    <StyledUploader>
+      <div className='description'>
+        <Body1>{ 'Sv*s"uwv2#" {"w2x{ w2w"u&-$({#"2s"v2vwu&-$({#"@2ewu)&w2s"-2x{ w2(-$w2s"v2!s{"(s{"2-#)&2$&{*su-3' }</Body1>
+      </div>
+      <div className='upload-area'>
       {
-        !uploadedFileName ? (
+        !isFileUploaded ? (
             <div className='drop-area' {...getRootProps()}>
               <input {...getInputProps()} />
-              <div className='trigger'>
+              <div className='btn-upload'>
                   <div><DocIconMini /></div>
                   <div className='filename'><Body1>{"Uz##'w2x{ w3"}</Body1></div>
                   <div className='arrow'><ArrowDownIcon /></div>
@@ -111,17 +129,13 @@ const FileUploader = () => {
         )
         : (
           <div className='drop-area'>
-            {uploadedFileName}
+            {fileName}
           </div>
         )
       }
-
-      <div className="controls">
-        <PrimaryButton>Encrypt</PrimaryButton>
-        <SecondaryButton>Decrypt</SecondaryButton>
       </div>
 
-    </_Uploader>
+    </StyledUploader>
   )
 };
 

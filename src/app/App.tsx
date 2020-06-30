@@ -1,8 +1,16 @@
 import * as React from "react";
 
+import { connect } from 'react-redux';
+import { uploadFile } from './actions/fileActions';
+import { encryptFile } from './actions/encryptActions';
+import { FileDataInterface } from './interfaces';
+import { EncryptedFileInterface } from './interfaces';
+
 import Header from './components/Header';
 import Hero from "./components/Hero";
 import FileUploader from './components/FileUploader';
+import Loader from './components/Loader';
+import Controls from './components/Controls';
 import Footer from './components/Footer';
 
 import { createGlobalStyle } from 'styled-components';
@@ -23,7 +31,25 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const App: React.FC = () => {
+interface Props {
+  uploadFile: (fileData: FileDataInterface) => void,
+  encryptFile: (fileData: FileDataInterface) => void,
+  fileData: FileDataInterface,
+  encryptedFile: EncryptedFileInterface,
+  isEncryptingProgress: boolean,
+  isEncryptingDone: boolean,
+}
+
+const App: React.FC<Props> = props => {
+  const {
+    uploadFile,
+    encryptFile,
+    fileData,
+    encryptedFile,
+    isEncryptingProgress,
+    isEncryptingDone
+  } = props;
+
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
@@ -37,9 +63,44 @@ const App: React.FC = () => {
           <Hero />
         </div>
 
-        <div className="uploader">
-          <FileUploader />
+        {isEncryptingProgress
+          ? (
+            <div className='loader'>
+              <Loader />
+            </div>
+          )
+          : (
+            <>
+              {
+                isEncryptingDone
+                  ? (
+                      <div className='downloader'>
+                        <h1 style={{color: 'white'}}>Download file: {encryptedFile.key}</h1>
+                        {/* <FileDownloader
+                          onDownload={downloadFile}
+                        /> */}
+                      </div>
+                  )
+                  :
+                  (
+                    <div className='uploader'>
+                      <FileUploader
+                        onUpload={uploadFile}
+                      />
+                    </div>
+                  )
+              }
+            </>
+          )
+        }
+
+        <div className='buttons'>
+          <Controls
+            onEncryptClick={() => encryptFile(fileData)}
+            onDecryptClick={() => {}}
+          />
         </div>
+
       </section>
 
       <footer>
@@ -50,4 +111,16 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+const mapStateToProps = state => ({
+  fileData: state.file.data,
+  encryptedFile: state.encrypt.encryptedFile,
+  isEncryptingProgress: state.encrypt.isEncryptingProgress,
+  isEncryptingDone: state.encrypt.isEncryptingDone,
+})
+
+const mapDispatchToProps = dispatch => ({
+  uploadFile: (fileData: FileDataInterface) => dispatch(uploadFile(fileData)),
+  encryptFile: (fileData: FileDataInterface) => dispatch(encryptFile(fileData))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

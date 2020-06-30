@@ -1,11 +1,12 @@
 .main {
     display: grid;
-    grid-template: "header" auto
-                    ".    " 144px
-                    "hero"  auto
-                    ".    " 48px
+    grid-template: "header   " auto
+                    ".       " 144px
+                    "hero    "  auto
                     "uploader" auto
-                    ".    " 240px;
+                    ".       " 48px
+                    "buttons " auto
+                    ".       " 240px;
 }
 
 .header {
@@ -19,4 +20,16 @@
 
 .uploader {
     grid-area: uploader;
+}
+
+.downloader {
+    grid-area: uploader;
+}
+
+.loader {
+    grid-area: uploader;
+}
+
+.buttons {
+    grid-area: buttons;
 }
