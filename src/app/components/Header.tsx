@@ -7,7 +7,8 @@ import styled from 'styled-components';
 
 const _Header = ({ className }) => (
     <div className={className}>
-        <CubbitIcon />
+        <a href='/'><CubbitIcon /></a>
+
         <div className='toggle'>
             <Toggle
                 val1='Encrypted'

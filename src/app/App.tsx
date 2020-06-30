@@ -9,6 +9,7 @@ import { EncryptedFileInterface } from './interfaces';
 import Header from './components/Header';
 import Hero from "./components/Hero";
 import FileUploader from './components/FileUploader';
+import FileDownloader from './components/FileDownloader';
 import Loader from './components/Loader';
 import Controls from './components/Controls';
 import Footer from './components/Footer';
@@ -75,10 +76,7 @@ const App: React.FC<Props> = props => {
                 isEncryptingDone
                   ? (
                       <div className='downloader'>
-                        <h1 style={{color: 'white'}}>Download file: {encryptedFile.key}</h1>
-                        {/* <FileDownloader
-                          onDownload={downloadFile}
-                        /> */}
+                        <FileDownloader />
                       </div>
                   )
                   :
@@ -87,19 +85,16 @@ const App: React.FC<Props> = props => {
                       <FileUploader
                         onUpload={uploadFile}
                       />
+                      <Controls
+                        onEncryptClick={() => encryptFile(fileData)}
+                        onDecryptClick={() => {}}
+                      />
                     </div>
                   )
               }
             </>
           )
         }
-
-        <div className='buttons'>
-          <Controls
-            onEncryptClick={() => encryptFile(fileData)}
-            onDecryptClick={() => {}}
-          />
-        </div>
 
       </section>
 
