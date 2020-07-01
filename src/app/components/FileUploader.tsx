@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import {useDropzone} from 'react-dropzone';
 
 import { isTxtFile } from '../utils/fileExtensions';
+import { Label } from '../providers/Language';
 
 import { fileNameSelector, isFileUplaodedSelector } from '../selectors';
 
@@ -124,7 +125,7 @@ const FileUploader: React.FC<Props> = props => {
   return (
     <StyledUploader>
       <div className='description'>
-        <Body1>{ 'Sv*s"uwv2#" {"w2x{ w2w"u&-$({#"2s"v2vwu&-$({#"@2ewu)&w2s"-2x{ w2(-$w2s"v2!s{"(s{"2-#)&2$&{*su-3' }</Body1>
+        <Body1><Label name='description_content' /></Body1>
       </div>
       <div className='upload-area'>
       {
@@ -134,7 +135,7 @@ const FileUploader: React.FC<Props> = props => {
 
               <div className='btn-upload'>
                   <div><DocIconMini /></div>
-                  <div className='text'><Body1>{"Uz##'w2x{ w3"}</Body1></div>
+                  <div className='text'><Body1><Label name='upload_content' /></Body1></div>
                   <div className='arrow'><ArrowDownIcon /></div>
               </div>
 

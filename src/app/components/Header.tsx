@@ -1,25 +1,13 @@
 import * as React from 'react';
 
-import {CubbitIcon} from './Icons';
+import { LanguageContext, languageOptions } from '../providers/Language';
+
+import { CubbitIcon } from './Icons';
 import Toggle from './Toggle';
 
 import styled from 'styled-components';
 
-const _Header = ({ className }) => (
-    <div className={className}>
-        <a href='/'><CubbitIcon /></a>
-
-        <div className='toggle'>
-            <Toggle
-                val1='Encrypted'
-                val2={'W"y {\'z'}
-                onToggle={() => {}} // TODO: run a real func
-            />
-        </div>
-    </div>
-);
-
-const Header = styled(_Header)`
+const StyledHeader = styled.div`
     background: ${props => props.theme.colors.grey};
     display: flex;
     align-items: center;
@@ -44,5 +32,28 @@ const Header = styled(_Header)`
         }
     }
 `;
+
+const Header = () => {
+    const languageContext = React.useContext(LanguageContext);
+
+    const handleLanguageChange = (isOn) => {
+        const selectedLanguage = languageOptions.find(item => item.id === languageOptions[isOn ? 1 : 0].id);
+        languageContext.setLanguage(selectedLanguage);
+    };
+
+    return (
+        <StyledHeader>
+            <a href='/'><CubbitIcon /></a>
+
+            <div className='toggle'>
+                <Toggle
+                    val1={languageOptions[0].text}
+                    val2={languageOptions[1].text}
+                    onToggle={(isOn) => handleLanguageChange(isOn)}
+                />
+            </div>
+        </StyledHeader>
+    )
+};
 
 export default Header;

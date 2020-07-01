@@ -18,7 +18,7 @@ const fileEncryptRequest = () => ({ type: FILE_ENCRYPT_REQUEST });
 const fileEncryptSuccess = (obj: EncryptSuccessPayload) => ({ type: FILE_ENCRYPT_SUCCESS, payload: obj });
 const fileEncryptError = () => ({ type: FILE_ENCRYPT_ERROR });
 
-export const encryptFile = ({ content }) => dispatch => {
+export const encryptFile = (content: string) => dispatch => {
     if(!content) {
         return;
     }

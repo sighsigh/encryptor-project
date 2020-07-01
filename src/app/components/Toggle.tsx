@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import styled from 'styled-components';
 
-const _Toggle = styled.div`
+const StyledToggle = styled.div`
     background-color: ${props => props.theme.colors.blue};
     border-radius: 2px;
     color: ${props => (props.theme.colors.white)};
@@ -38,7 +38,7 @@ const _Toggle = styled.div`
 
 interface Props {
     on?: boolean,
-    onToggle: () => void,
+    onToggle: (isOn: boolean) => void,
     val1: string | React.ReactNode,
     val2: string | React.ReactNode
 }
@@ -52,20 +52,18 @@ const Toggle: React.FC<Props> = ({on, onToggle, val1, val2}) => {
 
     const handleOnToggle = () => {
         setIsOn(!isOn);
-        onToggle();
+        onToggle(!isOn);
     }
 
     return (
-        <_Toggle
+        <StyledToggle
             className={isOn ? 'active' : ''}
             onClick={handleOnToggle}>
             <div>{val1}</div>
             <div>{val2}</div>
-        </_Toggle>
+        </StyledToggle>
 
     )
 };
-
-
 
 export default Toggle;
