@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import Title from './Title';
+import { Label } from '../providers/Language';
 
 import styled from 'styled-components';
 
@@ -13,7 +14,7 @@ const StyledHero = styled.div`
 function Hero() {
     return (
         <StyledHero>
-            <Title>{'U)tt{(2w"u&-$(#&'}</Title>
+            <Title><Label name="hero_content" /></Title>
         </StyledHero>
 
     )

@@ -47,8 +47,8 @@ const Header = () => {
 
             <div className='toggle'>
                 <Toggle
-                    val1={languageOptions[0].text} //'Encrypted'
-                    val2={languageOptions[1].text} //'W"y {\'z'}
+                    val1={languageOptions[0].text}
+                    val2={languageOptions[1].text}
                     onToggle={(isOn) => handleLanguageChange(isOn)}
                 />
             </div>
