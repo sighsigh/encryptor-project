@@ -1,5 +1,5 @@
-import { Encrypter } from '../utils/encrypt';
-import { Action } from 'redux';
+import { Encryptor } from '../utils/encrypt';
+import { db } from '../utils/db';
 
 export const FILE_ENCRYPT_REQUEST = 'FILE_ENCRYPT_REQUEST';
 export const FILE_ENCRYPT_SUCCESS = 'FILE_ENCRYPT_SUCCESS';
@@ -23,23 +23,27 @@ export const encryptFile = ({ content }) => dispatch => {
         return;
     }
 
-    const encrypter = new Encrypter();
+    const encrypter = new Encryptor();
     // simulate api call
     return new Promise((resolve, reject) => {
         dispatch(fileEncryptRequest());
         setTimeout(() => {
             encrypter.encrypt(content);
-            const { encryptedText } = encrypter;
+            const { encryptedText, secret, iv_hex, key_hex, } = encrypter;
+
+            db.save({ encryptedText, secret, iv_hex, key_hex });
 
             if(!encryptedText) {
                 dispatch(fileEncryptError());
                 reject();
             }
 
-            resolve(dispatch(fileEncryptSuccess({
+            dispatch(fileEncryptSuccess({
                 text: encryptedText,
                 key: encrypter.secret
-            })));
+            }))
+
+            resolve();
         }, 1500);
     })
 }

@@ -19,11 +19,24 @@ const PrimaryButton = styled(Button)`
     background-color: ${props => props.theme.colors.blue};
 `;
 
+const PrimaryButtonSmall = styled(PrimaryButton)`
+    font-size: 14px;
+    line-height: 23px;
+    height: 38px;
+    min-width: 135px;
+`;
+
 const SecondaryButton = styled(Button)`
     background-color: ${props => props.theme.colors.dark_blue};
-`
+`;
+
+const ActionButton = styled(Button)`
+    background-color: ${props => props.theme.colors.orange};
+`;
 
 export {
     PrimaryButton,
-    SecondaryButton
+    PrimaryButtonSmall,
+    SecondaryButton,
+    ActionButton
 }

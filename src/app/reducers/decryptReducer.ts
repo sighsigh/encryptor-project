@@ -1,46 +1,49 @@
 import {
-    FILE_ENCRYPT_REQUEST,
-    FILE_ENCRYPT_SUCCESS,
-    FILE_ENCRYPT_ERROR
-} from '../actions/encryptActions';
-
-import { EncryptedFileInterface } from '../interfaces';
+    DECRYPT_MODE_ON,
+    FILE_DECRYPT_REQUEST,
+    FILE_DECRYPT_SUCCESS,
+    FILE_DECRYPT_ERROR
+} from '../actions/decryptActions';
 
 interface StateInterface {
     isInProgress: boolean,
     isDone: boolean,
-    encryptedFile: EncryptedFileInterface
+    isModeOn: boolean,
+    text: string
 }
 
 const initialState: StateInterface = {
     isInProgress: false,
     isDone: false,
-    encryptedFile: {
-        text: '',
-        key: ''
-    }
+    isModeOn: false,
+    text: ''
 }
 
 export default (state = initialState, action) => {
     switch(action.type) {
-        case FILE_ENCRYPT_REQUEST:
+        case DECRYPT_MODE_ON:
+            return {
+                ...state,
+                isModeOn: true
+            }
+        case FILE_DECRYPT_REQUEST:
             return {
                 ...state,
                 isInProgress: true,
                 isDone: false
             }
-        case FILE_ENCRYPT_SUCCESS:
+        case FILE_DECRYPT_SUCCESS:
             return {
                 ...state,
                 isInProgress: false,
                 isDone: true,
-                encryptedFile: action.payload
+                text: action.payload
             }
-        case FILE_ENCRYPT_ERROR:
+        case FILE_DECRYPT_ERROR:
             return {
                 ...state,
-                isEncrypting: false,
-                isEncryptingDone: false,
+                isInProgress: false,
+                isDone: false,
             }
         default:
             return state;

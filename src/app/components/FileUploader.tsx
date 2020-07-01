@@ -4,8 +4,12 @@ import {useDropzone} from 'react-dropzone';
 
 import { isTxtFile } from '../utils/fileExtensions';
 
+import { fileNameSelector, isFileUplaodedSelector } from '../selectors';
+
 import { Body1 } from './Body';
 import { DocIconMini, ArrowDownIcon } from './Icons';
+import Recap from './Recap';
+
 import styled from 'styled-components';
 
 const StyledUploader = styled.div`
@@ -14,6 +18,11 @@ const StyledUploader = styled.div`
       max-width: 552px;
       margin: 0 auto 48px;
       text-align: center;
+
+      @media ${props => props.theme.media_queries.phone_only} {
+        padding: 0 8px;
+        word-break: break-word;
+      }
     }
 
     .upload-area {
@@ -34,6 +43,10 @@ const StyledUploader = styled.div`
         flex-direction: column;
         justify-content: center;
         height: 100%;
+
+        &.dropped {
+          cursor: default
+        }
     }
 
     .btn-upload {
@@ -54,7 +67,7 @@ const StyledUploader = styled.div`
           flex: 1 1 33.33333%;
         }
 
-        .filename {
+        .text {
           flex: 1 1 142px;
           justify-content: flex-start;
         }
@@ -78,33 +91,32 @@ interface Props {
 const FileUploader: React.FC<Props> = props => {
   const { onUpload } = props;
 
-  const isFileUploaded = useSelector(state => state.file.isUploaded);
-  const fileName = useSelector(state => state.file.data.path);
+  const isFileUploaded = useSelector(isFileUplaodedSelector);
+  const fileName = useSelector(fileNameSelector);
 
   const onError = () => onUpload(null);
 
   const onDrop = React.useCallback(acceptedFiles => {
-    acceptedFiles.forEach((file) => {
+    const file = acceptedFiles[0];
 
-      if(!isTxtFile(file.name)) {
-        console.error('Invalid file type. Please upload a .txt file.');
-        return;
-      };
+    if(!isTxtFile(file.name)) {
+      console.error('Invalid file type. Please upload a .txt file.');
+      return;
+    };
 
-      const reader = new FileReader();
+    const reader = new FileReader();
 
-      reader.onabort = () => onError();
-      reader.onerror = () => onError();
-      reader.onload = () => {
-        const { result } = reader;
+    reader.onabort = () => onError();
+    reader.onerror = () => onError();
+    reader.onload = () => {
+      const { result } = reader;
 
-        onUpload({
-          path: file.name,
-          content: result
-        });
-      }
-      reader.readAsText(file);
-    })
+      onUpload({
+        path: file.name,
+        content: result
+      });
+    }
+    reader.readAsText(file);
   }, [])
 
   const {getRootProps, getInputProps} = useDropzone({onDrop});
@@ -119,17 +131,19 @@ const FileUploader: React.FC<Props> = props => {
         !isFileUploaded ? (
             <div className='drop-area' {...getRootProps()}>
               <input {...getInputProps()} />
+
               <div className='btn-upload'>
                   <div><DocIconMini /></div>
-                  <div className='filename'><Body1>{"Uz##'w2x{ w3"}</Body1></div>
+                  <div className='text'><Body1>{"Uz##'w2x{ w3"}</Body1></div>
                   <div className='arrow'><ArrowDownIcon /></div>
               </div>
+
               <Body1>or drop files here</Body1>
             </div>
         )
         : (
-          <div className='drop-area'>
-            {fileName}
+          <div className='drop-area dropped'>
+            <Recap text={fileName} />
           </div>
         )
       }
