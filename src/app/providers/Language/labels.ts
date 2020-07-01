@@ -5,11 +5,3 @@ export const encryptedLabels = {
     upload_content: 'Uz##\'w2x{ w3',
     footer_content: 'fzw2+z# w2{\'2"w*w&2(zw2\')!2#x2(zw2$s&(\'2?2{(2{\'2y&ws(w&2#&2 w\'\'w&>2vw$w"v{"y2#"2z#+2+w 2(zw2{"v{*{v)s \'2+#&}2(#yw(zw&'
 };
-
-export const englishLabels = {
-    english_language_content: 'test',
-    hero_content: 'test',
-    description_content: 'test',
-    upload_content: 'test',
-    footer_content: 'test'
-};
