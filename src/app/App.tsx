@@ -17,6 +17,8 @@ import Footer from './components/Footer';
 import { createGlobalStyle } from 'styled-components';
 import { ThemeProvider, theme } from "./theme";
 
+import { LanguageProvider, Label } from './providers/Language';
+
 import './App.css';
 
 const GlobalStyle = createGlobalStyle`
@@ -62,58 +64,59 @@ const App: React.FC<Props> = props => {
 
   return (
     <ThemeProvider theme={theme}>
-      <GlobalStyle />
+      <LanguageProvider>
+        <GlobalStyle />
 
-      <section className='main'>
-        <div className='header'>
-          <Header />
-        </div>
+        <section className='main'>
+          <div className='header'>
+            <Header />
+          </div>
 
-        <div className='hero'>
-          <Hero />
-        </div>
+          <div className='hero'>
+            <Hero />
+          </div>
 
-        { showLoader
-          ? (
-            <div className='loader'>
-              <Loader />
-            </div>
-          )
-          : (
-            <>
-              { showDownloadArea
-                ? (
-                    <div className='downloader'>
-                      <FileDownloader
-                        onDecrypt={decryptFile}
+          { showLoader
+            ? (
+              <div className='loader'>
+                <Loader />
+              </div>
+            )
+            : (
+              <>
+                { showDownloadArea
+                  ? (
+                      <div className='downloader'>
+                        <FileDownloader
+                          onDecrypt={decryptFile}
+                        />
+                      </div>
+                  )
+                  :
+                  (
+                    <div className='uploader'>
+                      <FileUploader
+                        onUpload={uploadFile}
                       />
+                      <div className="controls">
+                        <Controls
+                          onEncryptClick={encryptFile}
+                          onDecryptClick={enableDecryptMode}
+                        />
+                      </div>
                     </div>
-                )
-                :
-                (
-                  <div className='uploader'>
-                    <FileUploader
-                      onUpload={uploadFile}
-                    />
-                    <div className="controls">
-                      <Controls
-                        onEncryptClick={encryptFile}
-                        onDecryptClick={enableDecryptMode}
-                      />
-                    </div>
-                  </div>
-                )
-              }
-            </>
-          )
-        }
+                  )
+                }
+              </>
+            )
+          }
 
-      </section>
+        </section>
 
-      <footer>
-        <Footer />
-      </footer>
-
+        <footer>
+          <Footer />
+        </footer>
+      </LanguageProvider>
     </ThemeProvider>
   );
 };
@@ -128,7 +131,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   uploadFile: (fileData: FileDataInterface) => dispatch(uploadFile(fileData)),
-  encryptFile: (fileData: FileDataInterface) => dispatch(encryptFile(fileData)),
+  encryptFile: (content: string) => dispatch(encryptFile(content)),
   decryptFile: (key: string) => dispatch(decryptFile(key)),
   enableDecryptMode: () => dispatch(enableDecryptMode())
 })

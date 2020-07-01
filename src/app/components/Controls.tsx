@@ -22,11 +22,11 @@ interface Props {
 }
 
 const Controls: React.FC<Props> = props => {
-    const fileData = useSelector(fileDataSelector);
+    const { content } = useSelector(fileDataSelector);
 
     return (
         <StyledControls>
-            <PrimaryButton onClick={() => props.onEncryptClick(fileData)}>Encrypt</PrimaryButton>
+            <PrimaryButton onClick={() => props.onEncryptClick(content)}>Encrypt</PrimaryButton>
             <SecondaryButton onClick={props.onDecryptClick}>Decrypt</SecondaryButton>
         </StyledControls>
     )
