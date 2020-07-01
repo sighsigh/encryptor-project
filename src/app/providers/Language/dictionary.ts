@@ -4,7 +4,7 @@ import { CubbitEncrypter } from '../../utils/cubbitCipher';
 const encrypter = new CubbitEncrypter();
 const DECRYPT_KEY = 'frontend';
 
-const decryptLabels = labels => {
+const getDecryptedLabels = (labels: Object): Object => {
     const decryptedLabels = {};
     Object.keys(labels).forEach(k => {
         decryptedLabels[k] = encrypter.decrypt(DECRYPT_KEY, labels[k]);
@@ -14,7 +14,7 @@ const decryptLabels = labels => {
 
 export const labels = {
     encryptedLabels,
-    englishLabels: decryptLabels(encryptedLabels)
+    englishLabels: getDecryptedLabels(encryptedLabels)
 };
 
 export const languageOptions = [
