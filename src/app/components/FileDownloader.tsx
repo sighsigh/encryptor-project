@@ -123,9 +123,8 @@ const FileDownloader: React.FC<Props> = ({ onDecrypt }) => {
                         </div>
 
                         <div className='btn-download'>
-                            <ActionButton
-                                type='submit'>
-                                    Decrypt and download
+                            <ActionButton type='submit'>
+                                Decrypt and download
                             </ActionButton>
                         </div>
                     </form>
@@ -151,7 +150,10 @@ const FileDownloader: React.FC<Props> = ({ onDecrypt }) => {
                         </div>
 
                         <div className='btn-download'>
-                            <ActionButton onClick={() => downloadFile(fileName, encryptedContent)}>Download</ActionButton>
+                            <ActionButton
+                                onClick={() => downloadFile(fileName, encryptedContent)}>
+                                Download
+                            </ActionButton>
                         </div>
                     </div>
                 )

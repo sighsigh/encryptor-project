@@ -5,10 +5,7 @@
     "jsx": "preserve",
     "strict": true,
     "moduleResolution": "node",
-    "baseUrl": ".",
-    "paths": {
-      "~*": ["src/app/*"]
-    }
+    "baseUrl": "."
   },
   "include": ["src/**/*"]
 }

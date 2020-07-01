@@ -23,7 +23,7 @@ export const decryptFile = (key: string) => dispatch => {
     return new Promise((resolve, reject) => {
         dispatch(fileDecryptRequest());
         setTimeout(() => {
-            const { encryptedText, key_hex, iv_hex } = db.getBySecretKey(key);
+            const { encryptedText, key_hex, iv_hex } = db.getById(key);
             encrypter.decrypt({ encryptedText, key_hex, iv_hex });
 
             if(!encrypter.decryptedText) {

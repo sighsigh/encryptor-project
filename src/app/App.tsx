@@ -40,7 +40,8 @@ interface Props {
   isEncryptingProgress: boolean,
   isEncryptingDone: boolean,
   isDecryptingProgress: boolean,
-  isDecryptingModeOn: boolean
+  isDecryptingModeOn: boolean,
+  isDecryptingDone: boolean
 }
 
 const App: React.FC<Props> = props => {
@@ -52,8 +53,12 @@ const App: React.FC<Props> = props => {
     isEncryptingProgress,
     isEncryptingDone,
     isDecryptingProgress,
-    isDecryptingModeOn
+    isDecryptingModeOn,
+    isDecryptingDone,
   } = props;
+
+  const showLoader = isEncryptingProgress || isDecryptingProgress;
+  const showDownloadArea = isEncryptingDone || isDecryptingDone || isDecryptingModeOn;
 
   return (
     <ThemeProvider theme={theme}>
@@ -68,7 +73,7 @@ const App: React.FC<Props> = props => {
           <Hero />
         </div>
 
-        {(isEncryptingProgress || isDecryptingProgress)
+        { showLoader
           ? (
             <div className='loader'>
               <Loader />
@@ -76,29 +81,28 @@ const App: React.FC<Props> = props => {
           )
           : (
             <>
-              {
-                (isEncryptingDone || isDecryptingModeOn)
-                  ? (
-                      <div className='downloader'>
-                        <FileDownloader
-                          onDecrypt={decryptFile}
-                        />
-                      </div>
-                  )
-                  :
-                  (
-                    <div className='uploader'>
-                      <FileUploader
-                        onUpload={uploadFile}
+              { showDownloadArea
+                ? (
+                    <div className='downloader'>
+                      <FileDownloader
+                        onDecrypt={decryptFile}
                       />
-                      <div className="controls">
-                        <Controls
-                          onEncryptClick={encryptFile}
-                          onDecryptClick={enableDecryptMode}
-                        />
-                      </div>
                     </div>
-                  )
+                )
+                :
+                (
+                  <div className='uploader'>
+                    <FileUploader
+                      onUpload={uploadFile}
+                    />
+                    <div className="controls">
+                      <Controls
+                        onEncryptClick={encryptFile}
+                        onDecryptClick={enableDecryptMode}
+                      />
+                    </div>
+                  </div>
+                )
               }
             </>
           )
@@ -119,6 +123,7 @@ const mapStateToProps = state => ({
   isEncryptingDone: state.encrypt.isDone,
   isDecryptingModeOn: state.decrypt.isModeOn,
   isDecryptingProgress: state.decrypt.isInProgress,
+  isDecryptingDone: state.decrypt.isDone,
 });
 
 const mapDispatchToProps = dispatch => ({

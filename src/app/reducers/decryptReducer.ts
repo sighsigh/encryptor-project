@@ -7,14 +7,14 @@ import {
 
 interface StateInterface {
     isInProgress: boolean,
-    isDecryptingDone: boolean,
+    isDone: boolean,
     isModeOn: boolean,
     text: string
 }
 
 const initialState: StateInterface = {
     isInProgress: false,
-    isDecryptingDone: false,
+    isDone: false,
     isModeOn: false,
     text: ''
 }
@@ -30,20 +30,20 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 isInProgress: true,
-                isDecryptingDone: false
+                isDone: false
             }
         case FILE_DECRYPT_SUCCESS:
             return {
                 ...state,
                 isInProgress: false,
-                isDecryptingDone: true,
+                isDone: true,
                 text: action.payload
             }
         case FILE_DECRYPT_ERROR:
             return {
                 ...state,
-                isDecrypting: false,
-                isDecryptingDone: false,
+                isInProgress: false,
+                isDone: false,
             }
         default:
             return state;

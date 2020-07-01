@@ -1,6 +1,6 @@
 export const db = {
-    getBySecretKey: (key: string) => {
-        const entry = localStorage.getItem(key);
+    getById: (id: string) => {
+        const entry = localStorage.getItem(id);
         if(entry) {
             return JSON.parse(entry);
         }
