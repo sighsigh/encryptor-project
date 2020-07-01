@@ -11,9 +11,7 @@ const fileDecryptRequest = () => ({ type: FILE_DECRYPT_REQUEST });
 const fileDecryptSuccess = (payload: string) => ({ type: FILE_DECRYPT_SUCCESS, payload });
 const fileDecryptError = () => ({ type: FILE_DECRYPT_ERROR });
 
-export const enableDecryptMode = () => dispatch => {
-    dispatch(setDecryptModeOn());
-}
+export const enableDecryptMode = () => dispatch => dispatch(setDecryptModeOn());
 
 export const decryptFile = (key: string) => dispatch => {
     if(!key) {

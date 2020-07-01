@@ -5,8 +5,11 @@ import {
     fileNameSelector,
     encryptionKeySelector,
     encryptedTextSelector,
-    isDecryptModeOn,
+    isDecryptModeOnSelector,
+    decryptedContentSelector
 } from '../selectors';
+
+import { downloadFile } from '../utils/download';
 
 import Recap from './Recap';
 import { Body1 } from './Body';
@@ -64,25 +67,18 @@ const StyledFileDownloader = styled.div`
     }
 `;
 
-const downloadFile = (filename: string, fileContent: string): void => {
-    const element = document.createElement('a');
-    element.setAttribute('href', 'data:fileContent/plain;charset=utf-8,' + encodeURIComponent(fileContent));
-    element.setAttribute('download', filename);
-    element.style.display = 'none';
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
-}
-
 interface Props {
     onDecrypt: (key: string) => void
 }
+
+const DECRYPTED_FILE_NAME = 'decrypted.txt';
 
 const FileDownloader: React.FC<Props> = ({ onDecrypt }) => {
     const fileName = useSelector(fileNameSelector);
     const encryptedContent = useSelector(encryptedTextSelector);
     const encryptionKey = useSelector(encryptionKeySelector);
-    const isDecryptMode = useSelector(isDecryptModeOn);
+    const isDecryptMode = useSelector(isDecryptModeOnSelector);
+    const decryptedContent = useSelector(decryptedContentSelector);
 
     const [decryptionKey, setDecryptionKey] = React.useState('');
 
@@ -94,10 +90,16 @@ const FileDownloader: React.FC<Props> = ({ onDecrypt }) => {
         document.execCommand('copy');
     };
 
-    const decryptAndDownload = async () => {
-        await onDecrypt(decryptionKey);
-        // TODO FIX
+    const decrypt = (e) => {
+        e.preventDefault();
+        onDecrypt(decryptionKey);
     }
+
+    React.useEffect(() => {
+        if(isDecryptMode && decryptedContent) {
+            downloadFile(DECRYPTED_FILE_NAME, decryptedContent);
+        }
+    }, [])
 
     return (
         <StyledFileDownloader>
@@ -107,7 +109,7 @@ const FileDownloader: React.FC<Props> = ({ onDecrypt }) => {
 
             { isDecryptMode
                 ? (
-                    <form className="download-area" onSubmit={decryptAndDownload}>
+                    <form className="download-area" onSubmit={decrypt}>
                         <div className="title">
                             <Body1>Insert your key:</Body1>
                         </div>

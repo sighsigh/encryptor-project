@@ -20,6 +20,7 @@ const StyledLoader = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    min-height: 400px;
 
     .square {
         background-color: ${props => props.theme.colors.orange};

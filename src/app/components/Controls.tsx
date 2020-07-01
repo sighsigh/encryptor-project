@@ -1,4 +1,8 @@
 import * as React from 'react';
+import { useSelector } from 'react-redux';
+
+import { fileDataSelector } from '../selectors';
+import { FileDataInterface } from '../interfaces';
 
 import { PrimaryButton, SecondaryButton } from './Button';
 import styled from 'styled-components';
@@ -13,14 +17,16 @@ const StyledControls = styled.div`
 `;
 
 interface Props {
-    onEncryptClick: () => void,
+    onEncryptClick: (fileData: FileDataInterface) => void,
     onDecryptClick: () => void,
 }
 
 const Controls: React.FC<Props> = props => {
+    const fileData = useSelector(fileDataSelector);
+
     return (
         <StyledControls>
-            <PrimaryButton onClick={props.onEncryptClick}>Encrypt</PrimaryButton>
+            <PrimaryButton onClick={() => props.onEncryptClick(fileData)}>Encrypt</PrimaryButton>
             <SecondaryButton onClick={props.onDecryptClick}>Decrypt</SecondaryButton>
         </StyledControls>
     )

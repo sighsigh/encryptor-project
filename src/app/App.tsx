@@ -5,7 +5,6 @@ import { uploadFile } from './actions/fileActions';
 import { encryptFile } from './actions/encryptActions';
 import {decryptFile,  enableDecryptMode } from './actions/decryptActions';
 import { FileDataInterface } from './interfaces';
-import { EncryptedFileInterface } from './interfaces';
 
 import Header from './components/Header';
 import Hero from "./components/Hero";
@@ -34,12 +33,10 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 interface Props {
-  uploadFile: (fileData: FileDataInterface) => void,
-  encryptFile: (fileData: FileDataInterface) => void,
-  decryptFile: (key: string) => void,
+  uploadFile: () => void,
+  encryptFile: () => void,
+  decryptFile: () => void,
   enableDecryptMode: () => void,
-  fileData: FileDataInterface,
-  encryptedFile: EncryptedFileInterface,
   isEncryptingProgress: boolean,
   isEncryptingDone: boolean,
   isDecryptingProgress: boolean,
@@ -52,8 +49,6 @@ const App: React.FC<Props> = props => {
     encryptFile,
     decryptFile,
     enableDecryptMode,
-    fileData,
-    encryptedFile,
     isEncryptingProgress,
     isEncryptingDone,
     isDecryptingProgress,
@@ -98,7 +93,7 @@ const App: React.FC<Props> = props => {
                       />
                       <div className="controls">
                         <Controls
-                          onEncryptClick={() => encryptFile(fileData)}
+                          onEncryptClick={encryptFile}
                           onDecryptClick={enableDecryptMode}
                         />
                       </div>
@@ -120,8 +115,6 @@ const App: React.FC<Props> = props => {
 };
 
 const mapStateToProps = state => ({
-  fileData: state.file.data,
-  encryptedFile: state.encrypt.encryptedFile,
   isEncryptingProgress: state.encrypt.isInProgress,
   isEncryptingDone: state.encrypt.isDone,
   isDecryptingModeOn: state.decrypt.isModeOn,
