@@ -107,7 +107,7 @@ const FileDownloader: React.FC<Props> = ({ onDecrypt }) => {
     return (
         <StyledFileDownloader>
             <div className='recap'>
-                <Recap text={fileName} light />
+                <Recap text={fileName || DECRYPTED_FILE_NAME} light />
             </div>
 
             { isDecryptMode
