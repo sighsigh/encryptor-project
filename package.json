@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "encrypt and decrypt files on the web",
   "main": "index.js",
-  "repository": "",
-  "author": "SG",
+  "repository": "https://github.com/sighsigh/encryptor-project",
+  "author": "sighsigh",
   "license": "MIT",
   "scripts": {
     "start": "parcel src/index.html"

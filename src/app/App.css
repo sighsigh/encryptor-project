@@ -1,10 +1,10 @@
 .main {
     display: grid;
-    grid-template: "header   " auto
-                    ".       " 144px
-                    "hero    "  auto
-                    "manager" auto
-                    ".       " 192px;
+    grid-template: "header  " auto
+                    ".      " 144px
+                    "hero   " auto
+                    ".      " 24px
+                    "manager" auto;
 }
 
 .header {
@@ -24,4 +24,11 @@
 
 .controls {
     margin-top: 48px;
+}
+
+footer {
+    margin-top: 192px;
+}
+@media screen and (max-width: 767px) {
+    footer { margin-top: 174px; }
 }

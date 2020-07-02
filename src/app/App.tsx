@@ -31,6 +31,8 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     min-height: 100vh;
+
+    * { box-sizing: border-box; }
   }
 `;
 
@@ -110,12 +112,12 @@ const App: React.FC<Props> = props => {
               </>
             )
           }
-
         </section>
 
         <footer>
           <Footer />
         </footer>
+
       </LanguageProvider>
     </ThemeProvider>
   );

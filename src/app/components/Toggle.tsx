@@ -23,7 +23,7 @@ const StyledToggle = styled.div`
         height: calc(100% - 4px);
         width: calc(100% / 2 - 4px);
         border-radius: inherit;
-        transition: left .3s ease-in-out;
+        transition: left .25s ease-in-out;
     }
 
     &.active:before {
@@ -62,7 +62,6 @@ const Toggle: React.FC<Props> = ({on, onToggle, val1, val2}) => {
             <div>{val1}</div>
             <div>{val2}</div>
         </StyledToggle>
-
     )
 };
 

@@ -36,6 +36,7 @@ export const encryptFile = (content: string) => dispatch => {
             if(!encryptedText) {
                 dispatch(fileEncryptError());
                 reject();
+                return;
             }
 
             dispatch(fileEncryptSuccess({

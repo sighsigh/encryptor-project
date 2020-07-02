@@ -52,6 +52,9 @@ const StyledFileDownloader = styled.div`
                 border-radius: 3px;
                 background-color: ${props => props.theme.colors.grey};
                 color: inherit;
+                font-family: ${props => props.theme.font.family};
+                font-size: 14px;
+                line-height: 23px;
                 height: 48px;
                 width: inherit;
                 padding: 0 32px;
@@ -60,8 +63,8 @@ const StyledFileDownloader = styled.div`
 
             button {
                 position: absolute;
-                top: 5px;
-                right: 5px;
+                top: 6px;
+                right: 6px;
             }
         }
     }
