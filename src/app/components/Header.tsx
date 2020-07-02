@@ -1,9 +1,11 @@
 import * as React from 'react';
 
-import { LanguageContext, languageOptions } from '../providers/Language';
+import { useSelector } from 'react-redux';
+import { isoCodeSelector } from '../selectors';
 
 import { CubbitIcon } from './Icons';
 import Toggle from './Toggle';
+import Label from './Label';
 
 import styled from '../theme';
 
@@ -33,27 +35,22 @@ const StyledHeader = styled.div`
     }
 `;
 
-const Header = () => {
-    const languageContext = React.useContext(LanguageContext);
+interface Props {
+    onChangeLang: () => void
+}
 
-    const handleLanguageChange = (isOn) => {
-        const selectedLanguage = languageOptions.find(item => item.id === languageOptions[isOn ? 1 : 0].id);
-        languageContext.setLanguage(selectedLanguage);
-    };
+const Header = (props: Props) => (
+    <StyledHeader>
+        <a href='/'><CubbitIcon /></a>
 
-    return (
-        <StyledHeader>
-            <a href='/'><CubbitIcon /></a>
-
-            <div className='toggle'>
-                <Toggle
-                    val1={languageOptions[0].text}
-                    val2={languageOptions[1].text}
-                    onToggle={(isOn) => handleLanguageChange(isOn)}
-                />
-            </div>
-        </StyledHeader>
-    )
-};
+        <div className='toggle'>
+            <Toggle
+                val1={<Label name='xx_lang_content' />}
+                val2={<Label name='en_lang_content' />}
+                onToggle={props.onChangeLang}
+            />
+        </div>
+    </StyledHeader>
+);
 
 export default Header;

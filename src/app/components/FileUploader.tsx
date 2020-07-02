@@ -3,13 +3,13 @@ import { useSelector } from 'react-redux';
 import {useDropzone} from 'react-dropzone';
 
 import { isTxtFile } from '../utils/fileExtensions';
-import { Label } from '../providers/Language';
 
 import { fileNameSelector, isFileUplaodedSelector } from '../selectors';
 
 import { Body1 } from './Body';
 import { DocIconMini, ArrowDownIcon } from './Icons';
 import Recap from './Recap';
+import Label from './Label';
 
 import styled from '../theme';
 

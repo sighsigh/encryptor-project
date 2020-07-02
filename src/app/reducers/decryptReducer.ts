@@ -19,8 +19,8 @@ const initialState: StateInterface = {
     text: ''
 }
 
-export default (state = initialState, action) => {
-    switch(action.type) {
+export default (state = initialState, { type, payload }) => {
+    switch(type) {
         case DECRYPT_MODE_ON:
             return {
                 ...state,
@@ -37,7 +37,7 @@ export default (state = initialState, action) => {
                 ...state,
                 isInProgress: false,
                 isDone: true,
-                text: action.payload
+                text: payload
             }
         case FILE_DECRYPT_ERROR:
             return {

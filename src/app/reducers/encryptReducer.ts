@@ -21,8 +21,8 @@ const initialState: StateInterface = {
     }
 }
 
-export default (state = initialState, action) => {
-    switch(action.type) {
+export default (state = initialState, { type, payload }) => {
+    switch(type) {
         case FILE_ENCRYPT_REQUEST:
             return {
                 ...state,
@@ -34,7 +34,7 @@ export default (state = initialState, action) => {
                 ...state,
                 isInProgress: false,
                 isDone: true,
-                encryptedFile: action.payload
+                encryptedFile: payload
             }
         case FILE_ENCRYPT_ERROR:
             return {

@@ -19,12 +19,12 @@ const initialState: StateInterface = {
     isUploaded: false
 }
 
-export default (state = initialState, action) => {
-    switch(action.type) {
+export default (state = initialState, { type, payload }) => {
+    switch(type) {
         case FILE_UPLOAD_SUCCESS:
             return {
                 ...state,
-                data: action.payload,
+                data: payload,
                 isUploaded: true
             }
         case FILE_UPLOAD_REQUEST:

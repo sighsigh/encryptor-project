@@ -3,7 +3,8 @@ import * as React from "react";
 import { connect } from 'react-redux';
 import { uploadFile } from './actions/fileActions';
 import { encryptFile } from './actions/encryptActions';
-import {decryptFile,  enableDecryptMode } from './actions/decryptActions';
+import { decryptFile,  enableDecryptMode } from './actions/decryptActions';
+import { setLang } from "./actions/langActions";
 import { FileDataInterface } from './interfaces';
 
 import Header from './components/Header';
@@ -17,18 +18,20 @@ import Footer from './components/Footer';
 import { ThemeProvider, theme } from "./theme";
 import { GlobalStyle } from './App.styles';
 
-import { LanguageProvider } from './providers/Language';
+import { LangProvider } from './providers/Language';
 
 interface Props {
   uploadFile: () => void,
   encryptFile: () => void,
   decryptFile: () => void,
   enableDecryptMode: () => void,
+  setLang: (isoCode?:string, other?:boolean) => void,
   isEncryptingProgress: boolean,
   isEncryptingDone: boolean,
   isDecryptingProgress: boolean,
   isDecryptingModeOn: boolean,
-  isDecryptingDone: boolean
+  isDecryptingDone: boolean,
+  isoCode: string,
 }
 
 const App: React.FC<Props> = props => {
@@ -37,27 +40,33 @@ const App: React.FC<Props> = props => {
     encryptFile,
     decryptFile,
     enableDecryptMode,
+    setLang,
     isEncryptingProgress,
     isEncryptingDone,
     isDecryptingProgress,
     isDecryptingModeOn,
     isDecryptingDone,
+    isoCode,
   } = props;
 
   const showLoader = isEncryptingProgress || isDecryptingProgress;
   const showDownloadArea = isEncryptingDone || isDecryptingDone || isDecryptingModeOn;
 
+  React.useEffect(() => {
+    setLang();
+  }, [])
+
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
 
-      <LanguageProvider>
+      <LangProvider>
         <section className='main'>
           <div className='header'>
-            <Header />
+            <Header onChangeLang={() => setLang(isoCode, true)} />
           </div>
 
-          <div className='hero'>
+        <div className='hero'>
             <Hero />
           </div>
 
@@ -101,7 +110,7 @@ const App: React.FC<Props> = props => {
           <Footer />
         </footer>
 
-      </LanguageProvider>
+      </LangProvider>
     </ThemeProvider>
   );
 };
@@ -112,13 +121,15 @@ const mapStateToProps = state => ({
   isDecryptingModeOn: state.decrypt.isModeOn,
   isDecryptingProgress: state.decrypt.isInProgress,
   isDecryptingDone: state.decrypt.isDone,
+  isoCode: state.lang.isoCode
 });
 
 const mapDispatchToProps = dispatch => ({
   uploadFile: (fileData: FileDataInterface) => dispatch(uploadFile(fileData)),
   encryptFile: (content: string) => dispatch(encryptFile(content)),
   decryptFile: (key: string) => dispatch(decryptFile(key)),
-  enableDecryptMode: () => dispatch(enableDecryptMode())
+  enableDecryptMode: () => dispatch(enableDecryptMode()),
+  setLang: (iso: string, other: boolean) => dispatch(setLang(iso, other))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

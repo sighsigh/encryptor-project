@@ -1,2 +1,2 @@
-export { Label, LanguageContext, LanguageProvider } from './Language';
-export { languageOptions } from './dictionary';
+export { LangContext, LangProvider } from './Language';
+export { dictionary, DEFAULT_LANG, EN_LANG } from './labels';

@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { Body2 } from './Body';
-import { Label } from '../providers/Language';
+import Label from './Label';
 
 import styled from '../theme';
 

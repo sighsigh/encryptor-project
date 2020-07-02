@@ -7,3 +7,6 @@ export const encryptedTextSelector = state => state.encrypt.encryptedFile.text;
 
 export const decryptedContentSelector = state => state.decrypt.text;
 export const isDecryptModeOnSelector = state => state.decrypt.isModeOn;
+
+export const isoCodeSelector = state => state.lang.isoCode;
+export const messagesSelector = state => state.lang.messages;
