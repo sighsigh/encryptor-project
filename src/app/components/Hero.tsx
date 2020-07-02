@@ -3,7 +3,7 @@ import * as React from 'react';
 import Title from './Title';
 import { Label } from '../providers/Language';
 
-import styled from 'styled-components';
+import styled from '../theme';
 
 const StyledHero = styled.div`
     color: ${props => (props.theme.colors.white)};

@@ -5,7 +5,7 @@ import { LanguageContext, languageOptions } from '../providers/Language';
 import { CubbitIcon } from './Icons';
 import Toggle from './Toggle';
 
-import styled from 'styled-components';
+import styled from '../theme';
 
 const StyledHeader = styled.div`
     background: ${props => props.theme.colors.grey};

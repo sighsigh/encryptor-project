@@ -5,7 +5,7 @@ import { fileDataSelector } from '../selectors';
 import { FileDataInterface } from '../interfaces';
 
 import { PrimaryButton, SecondaryButton } from './Button';
-import styled from 'styled-components';
+import styled from '../theme';
 
 const StyledControls = styled.div`
     display: flex;

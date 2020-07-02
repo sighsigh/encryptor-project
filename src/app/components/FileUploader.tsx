@@ -11,7 +11,7 @@ import { Body1 } from './Body';
 import { DocIconMini, ArrowDownIcon } from './Icons';
 import Recap from './Recap';
 
-import styled from 'styled-components';
+import styled from '../theme';
 
 const StyledUploader = styled.div`
     .description {

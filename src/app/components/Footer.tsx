@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Body2 } from './Body';
 import { Label } from '../providers/Language';
 
-import styled from 'styled-components';
+import styled from '../theme';
 
 const StyledFooter = styled.div`
     margin-bottom: 24px;

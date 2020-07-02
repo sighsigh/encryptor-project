@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import styled, { css, keyframes } from 'styled-components';
+import styled, { css, keyframes } from '../theme';
 
 const pulse = keyframes`
   0% {
