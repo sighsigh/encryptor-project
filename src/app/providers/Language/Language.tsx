@@ -1,39 +1,23 @@
 import * as React from 'react';
 
-import { labels, languageOptions } from './dictionary';
+import { useSelector } from 'react-redux';
+import { isoCodeSelector, messagesSelector } from '../../selectors';
 
-export const LanguageContext = React.createContext({
-  language: languageOptions[0],
-  dictionary: labels[languageOptions[0].id]
+export const LangContext = React.createContext({
+  isoCode: '',
+  messages: {}
 });
 
-export function LanguageProvider(props) {
-  const languageContext = React.useContext(LanguageContext);
-  const [language, setCurrentLanguage] = React.useState(languageContext.language);
-  const [dictionary, setDictionary] = React.useState(languageContext.dictionary);
-
+export const LangProvider = (props) => {
   const provider = {
-      language,
-      dictionary,
-      setLanguage: (selectedLanguage) => {
-        setCurrentLanguage(selectedLanguage);
-        setDictionary(labels[selectedLanguage.id]);
-      }
-  };
+    isoCode: useSelector(isoCodeSelector),
+    messages: useSelector(messagesSelector)
+  }
 
   return (
-      <LanguageContext.Provider value={provider}>
-          {props.children}
-      </LanguageContext.Provider>
+    <LangContext.Provider value={provider}>
+      {props.children}
+    </LangContext.Provider>
   )
-};
-
-
-interface LabelProps {
-    name: string
 }
-export const Label = (props: LabelProps) => {
-  const languageContext = React.useContext(LanguageContext);
 
-  return languageContext.dictionary[props.name];
-};
