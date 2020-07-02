@@ -14,25 +14,10 @@ import Loader from './components/Loader';
 import Controls from './components/Controls';
 import Footer from './components/Footer';
 
-import { createGlobalStyle } from 'styled-components';
 import { ThemeProvider, theme } from "./theme";
+import { GlobalStyle } from './App.styles';
 
-import { LanguageProvider, Label } from './providers/Language';
-
-import './App.css';
-
-const GlobalStyle = createGlobalStyle`
-  body {
-    background-color: ${props => (props.theme.colors.dark)};
-    box-sizing: border-box;
-    color: ${props => (props.theme.colors.dark)};
-    font-family: ${props => (props.theme.font.family)};
-    font-weight: 300;
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-  }
-`;
+import { LanguageProvider } from './providers/Language';
 
 interface Props {
   uploadFile: () => void,
@@ -64,9 +49,9 @@ const App: React.FC<Props> = props => {
 
   return (
     <ThemeProvider theme={theme}>
-      <LanguageProvider>
-        <GlobalStyle />
+      <GlobalStyle />
 
+      <LanguageProvider>
         <section className='main'>
           <div className='header'>
             <Header />
@@ -110,12 +95,12 @@ const App: React.FC<Props> = props => {
               </>
             )
           }
-
         </section>
 
         <footer>
           <Footer />
         </footer>
+
       </LanguageProvider>
     </ThemeProvider>
   );

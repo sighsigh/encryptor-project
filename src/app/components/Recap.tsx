@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { DocIcon } from './Icons';
+import { Body1 } from './Body';
 
 import styled from 'styled-components';
 
@@ -30,7 +31,7 @@ const Recap: React.FC<Props> = (props) => (
     <StyledRecap className={props.light ? 'light' : ''}>
         <DocIcon light={props.light} />
         <div className='filename'>
-            {props.text}
+            <Body1>{props.text}</Body1>
         </div>
     </StyledRecap>
 );

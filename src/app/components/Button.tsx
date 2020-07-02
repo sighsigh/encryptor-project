@@ -20,10 +20,10 @@ const PrimaryButton = styled(Button)`
 `;
 
 const PrimaryButtonSmall = styled(PrimaryButton)`
-    font-size: 14px;
-    line-height: 23px;
-    height: 38px;
-    min-width: 135px;
+    font-size: 16px;
+    line-height: 26px;
+    height: 36px;
+    min-width: 116px;
 `;
 
 const SecondaryButton = styled(Button)`
@@ -32,6 +32,7 @@ const SecondaryButton = styled(Button)`
 
 const ActionButton = styled(Button)`
     background-color: ${props => props.theme.colors.orange};
+    padding: 5px 28px;
 `;
 
 export {

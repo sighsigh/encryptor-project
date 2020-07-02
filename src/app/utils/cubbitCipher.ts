@@ -1,12 +1,10 @@
 export class CubbitEncrypter {
     minCode: number;
     maxCode: number;
-    alphabetLength: number;
 
-    constructor() {
-        this.minCode = 32;
-        this.maxCode = 125;
-        this.alphabetLength = this.maxCode - this.minCode + 1;
+    constructor(minCode?: number, maxCode?: number) {
+        this.minCode = minCode || 32;
+        this.maxCode = maxCode || 125;
     }
 
     getASCIICode(char: string): number {
@@ -25,8 +23,13 @@ export class CubbitEncrypter {
         return str.match(regex);
     }
 
+    getAlphabetLength() {
+        return this.maxCode - this.minCode + 1;
+    }
+
     encrypt(key: string, message: string): string {
         const positions = this.calculateASCIICodesSum(key);
+        const alphabetLength = this.getAlphabetLength();
 
         // split in chunks
         let chunksGroup = this.createChunkGroup(key.length, message);
@@ -39,7 +42,7 @@ export class CubbitEncrypter {
             chunk.split('').forEach(char => {
                 // shift characters
                 const charCode = this.getASCIICode(char);
-                const shiftedPosition = charCode + (positions % this.alphabetLength);
+                const shiftedPosition = charCode + (positions % alphabetLength);
                 const newPosition = shiftedPosition > this.maxCode
                     ? (this.minCode - 1) + (shiftedPosition - this.maxCode)
                     : shiftedPosition
@@ -57,6 +60,7 @@ export class CubbitEncrypter {
 
     decrypt(key: string, message: string): string {
         const positions = this.calculateASCIICodesSum(key);
+        const alphabetLength = this.getAlphabetLength();
 
         // split in chunks
         let chunksGroup = this.createChunkGroup(key.length, message);
@@ -66,7 +70,7 @@ export class CubbitEncrypter {
             chunk.split('').forEach(char => {
                 // shift characters
                 const charCode = this.getASCIICode(char);
-                const shiftedPosition = charCode - (positions % this.alphabetLength);
+                const shiftedPosition = charCode - (positions % alphabetLength);
                 const newPosition = shiftedPosition < this.minCode
                     ? (this.maxCode + 1) - (this.minCode - shiftedPosition)
                     : shiftedPosition
