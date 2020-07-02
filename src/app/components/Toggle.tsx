@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import styled from 'styled-components';
+import styled from '../theme';
 
 const StyledToggle = styled.div`
     background-color: ${props => props.theme.colors.blue};

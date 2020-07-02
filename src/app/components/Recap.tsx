@@ -3,7 +3,7 @@ import * as React from 'react';
 import { DocIcon } from './Icons';
 import { Body1 } from './Body';
 
-import styled from 'styled-components';
+import styled from '../theme';
 
 const StyledRecap = styled.div`
     display: flex;

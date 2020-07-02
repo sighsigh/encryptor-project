@@ -15,7 +15,7 @@ import Recap from './Recap';
 import { Body1 } from './Body';
 import { PrimaryButtonSmall, ActionButton } from './Button';
 
-import styled from 'styled-components';
+import styled from '../theme';
 
 const StyledFileDownloader = styled.div`
     color: ${props => props.theme.colors.white};
@@ -82,6 +82,7 @@ const FileDownloader: React.FC<Props> = ({ onDecrypt }) => {
     const encryptionKey = useSelector(encryptionKeySelector);
     const isDecryptMode = useSelector(isDecryptModeOnSelector);
     const decryptedContent = useSelector(decryptedContentSelector);
+    const name = isDecryptMode ? DECRYPTED_FILE_NAME : fileName;
 
     const [decryptionKey, setDecryptionKey] = React.useState('');
 
@@ -93,26 +94,25 @@ const FileDownloader: React.FC<Props> = ({ onDecrypt }) => {
         document.execCommand('copy');
     };
 
-    const decrypt = (e) => {
-        e.preventDefault();
+    const decrypt = () => {
         onDecrypt(decryptionKey);
     }
 
     React.useEffect(() => {
         if(isDecryptMode && decryptedContent) {
-            downloadFile(DECRYPTED_FILE_NAME, decryptedContent);
+            downloadFile(name, decryptedContent);
         }
     }, [])
 
     return (
         <StyledFileDownloader>
             <div className='recap'>
-                <Recap text={fileName || DECRYPTED_FILE_NAME} light />
+                <Recap text={name} light />
             </div>
 
             { isDecryptMode
                 ? (
-                    <form className="download-area" onSubmit={decrypt}>
+                    <div className="download-area">
                         <div className="title">
                             <Body1>Insert your key:</Body1>
                         </div>
@@ -126,11 +126,11 @@ const FileDownloader: React.FC<Props> = ({ onDecrypt }) => {
                         </div>
 
                         <div className='btn-download'>
-                            <ActionButton type='submit'>
+                            <ActionButton onClick={decrypt}>
                                 Decrypt and download
                             </ActionButton>
                         </div>
-                    </form>
+                    </div>
                 )
                 :
                 (
