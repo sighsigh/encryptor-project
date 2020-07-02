@@ -7,7 +7,10 @@
   "author": "sighsigh",
   "license": "MIT",
   "scripts": {
-    "start": "parcel src/index.html"
+    "clean": "rm -rf .cache dist build",
+    "start": "yarn clean && parcel src/index.html",
+    "build": "yarn clean && parcel build src/index.html --out-dir build --public-url ./",
+    "serve": "parcel serve build/index.html"
   },
   "dependencies": {
     "crypto-js": "^4.0.0",
@@ -26,10 +29,5 @@
     "parcel-bundler": "^1.12.4",
     "styled-components": "^5.1.1",
     "typescript": "^3.7.5"
-  },
-  "alias": {
-    "@components": "./src/app/components",
-    "@actions": "./src/app/actions",
-    "@reducers": "./src/app/reducers"
   }
 }
