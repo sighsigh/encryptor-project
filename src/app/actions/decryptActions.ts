@@ -14,16 +14,15 @@ const fileDecryptError = () => ({ type: FILE_DECRYPT_ERROR });
 export const enableDecryptMode = () => dispatch => dispatch(setDecryptModeOn());
 
 export const decryptFile = (key: string) => dispatch => {
-    if(!key) {
-        return;
-    }
+    if(!key) { return; }
 
     const encrypter = new Encryptor();
-    // simulate api call
+
     return new Promise((resolve, reject) => {
         dispatch(fileDecryptRequest());
-        setTimeout(() => {
-            const encryptedData = db.getById(key);
+
+        setTimeout(async () => {
+            const encryptedData = await db.getById(key);
 
             if(!encryptedData) {
                 dispatch(fileDecryptError());

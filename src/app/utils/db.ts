@@ -1,17 +1,26 @@
-export const db = {
-    getById: (id: string) => {
-        const entry = localStorage.getItem(id);
-        if(entry) {
-            return JSON.parse(entry);
-        }
-        return null;
-    },
+import { Store, set, get } from 'idb-keyval';
 
-    save: ({ secret, iv_hex, key_hex, encryptedText }) => {
-        localStorage.setItem(secret, JSON.stringify({
-            iv_hex,
-            key_hex,
-            encryptedText,
-        }))
+const DB_NAME = 'cubbit-db';
+const STORE_NAME = 'encrypted-files';
+
+class DB {
+    dbName: string;
+    storeName: string;
+    store: any;
+
+    constructor(dbName: string, storeName: string) {
+        this.dbName = dbName;
+        this.storeName = storeName;
+        this.store = new Store(this.dbName, this.storeName)
+    }
+
+    getById(id: string): Promise<any> {
+        return get(id, this.store);
+    }
+
+    save(key: string, val: any): Promise<any> {
+        return set(key, val, this.store);
     }
 }
+
+export const db = new DB(DB_NAME, STORE_NAME);
