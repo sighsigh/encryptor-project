@@ -1,6 +1,4 @@
-import { dictionary } from '../providers/Language';
-
-const DEFAULT_LANG = 'xx';
+import { dictionary, DEFAULT_LANG } from '../providers/Language';
 
 export const SET_LANG = 'SET_LANG';
 

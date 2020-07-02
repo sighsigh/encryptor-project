@@ -1,5 +1,8 @@
 import { getDecryptedLabels } from '../../utils/lang';
 
+export const DEFAULT_LANG = 'xx';
+export const EN_LANG = 'en';
+
 const encryptedLabels = {
     xx_lang_content: 'Encrypted',
     en_lang_content: 'W"y {\'z',
@@ -12,6 +15,6 @@ const encryptedLabels = {
 const decryptedLabels = getDecryptedLabels(encryptedLabels);
 
 export const dictionary = {
-    ['xx']: encryptedLabels,
-    ['en']: decryptedLabels
+    [DEFAULT_LANG]: encryptedLabels,
+    [EN_LANG]: decryptedLabels
 }
