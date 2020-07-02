@@ -19,19 +19,18 @@ const fileEncryptSuccess = (obj: EncryptSuccessPayload) => ({ type: FILE_ENCRYPT
 const fileEncryptError = () => ({ type: FILE_ENCRYPT_ERROR });
 
 export const encryptFile = (content: string) => dispatch => {
-    if(!content) {
-        return;
-    }
+    if(!content) { return; }
 
     const encrypter = new Encryptor();
-    // simulate api call
+
     return new Promise((resolve, reject) => {
         dispatch(fileEncryptRequest());
-        setTimeout(() => {
+
+        setTimeout(async () => {
             encrypter.encrypt(content);
             const { encryptedText, secret, iv_hex, key_hex, } = encrypter;
 
-            db.save({ encryptedText, secret, iv_hex, key_hex });
+            await db.save(secret, { encryptedText, secret, iv_hex, key_hex })
 
             if(!encryptedText) {
                 dispatch(fileEncryptError());
