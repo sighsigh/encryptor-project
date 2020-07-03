@@ -17,6 +17,8 @@ import { PrimaryButtonSmall, ActionButton } from './Button';
 
 import styled from '../theme';
 
+const DECRYPTED_FILE_NAME = 'decrypted.txt';
+
 const StyledFileDownloader = styled.div`
     color: ${props => props.theme.colors.white};
     max-width: 552px;
@@ -73,8 +75,6 @@ const StyledFileDownloader = styled.div`
 interface Props {
     onDecrypt: (key: string) => void
 }
-
-const DECRYPTED_FILE_NAME = 'decrypted.txt';
 
 const FileDownloader: React.FC<Props> = ({ onDecrypt }) => {
     const fileName = useSelector(fileNameSelector);

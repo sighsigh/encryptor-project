@@ -7,14 +7,14 @@ import styled from '../theme';
 
 const StyledFooter = styled.div`
     margin-bottom: 24px;
+    padding: 0 8px;
     text-align: center;
 `;
 
-function Footer() {
-    return (
-        <StyledFooter>
-            <Body2><Label name='footer_content' /></Body2>
-        </StyledFooter>
-}
+const Footer: React.FC = () => (
+    <StyledFooter>
+        <Body2><Label name='footer_content' /></Body2>
+    </StyledFooter>
+)
 
 export default Footer;

@@ -39,7 +39,7 @@ interface Props {
     onChangeLang: () => void
 }
 
-const Header = (props: Props) => (
+const Header: React.FC<Props> = props => (
     <StyledHeader>
         <a href='/'><CubbitIcon /></a>
 

@@ -43,10 +43,10 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     footer {
-        margin-top: 192px;
+        margin-top: 174px;
 
-        @media ${props => props.theme.media_queries.phone_only} {
-            margin-top: 174px;
+        @media ${props => props.theme.media_queries.tablet_up} {
+            margin-top: 192px;
         }
     }
 `;

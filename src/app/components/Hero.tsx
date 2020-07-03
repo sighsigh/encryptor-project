@@ -11,13 +11,10 @@ const StyledHero = styled.div`
     text-align: center;
 `;
 
-function Hero() {
-    return (
-        <StyledHero>
-            <Title><Label name="hero_content" /></Title>
-        </StyledHero>
-
-    )
-}
+const Hero: React.FC = () => (
+    <StyledHero>
+        <Title><Label name="hero_content" /></Title>
+    </StyledHero>
+);
 
 export default Hero;
