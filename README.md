@@ -1,6 +1,6 @@
 # Text File Encrypter App
 
-Encrypt and decrypt .txt files on the web.
+A small web app for encrypting and decrypting _.txt_ files on the web, built with React + Redux + Typescript.
 
 ## Create the app
 
