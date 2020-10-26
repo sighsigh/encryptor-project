@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "noImplicitAny": true,
+    "jsx": "react",
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@components/*": ["components/*", "@components"],
+      "@actions/*": ["actions/*", "actions"],
+      "@interfaces/*": ["interfaces/*", "interfaces"],
+      "@providers/*": ["providers/*", "providers"],
+      "@reducers/*": ["reducers/*", "reducers"],
+      "@selectors/*": ["selectors/*", "selectors"],
+      "@store/*": ["store/*", "store"],
+      "@utils/*": ["utils/*", "utils"],
+      "@theme/*": ["theme/*", "theme"],
+      "crypto": ["../node_modules/crypto-js"]
+    }
+  },
+  "include": ["src"]
+}
